@@ -7,12 +7,14 @@ namespace FluttDesk.Models
     public class Members
     {
         [Key]
-        public int Memberid { get; set; }
-        
-        [ForeignKey("Teamid")]
-        public virtual Teams Teams { get; set; }
+        public int Memberid { get; set; }        
+        [ForeignKey("Teams")]
         public int Teamid { get; set; }
-        public int Userid { get; set; }
+        public virtual Teams Teams { get; set; }
+
+        [ForeignKey("Users")]
+        public int UserId { get; set; }
+        public virtual Users Users { get; set; }
         public int MemberRole { get; set; }
     }
 }

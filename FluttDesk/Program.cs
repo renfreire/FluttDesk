@@ -75,12 +75,12 @@ app.MapPost("AdicionarUsuario", async (Users user, ContextDB contexto) =>
 {
     contexto.Users.Add(user);
     await contexto.SaveChangesAsync();
-    return Results.Created($"AdicionarUsuario/{user.UserID}", user);
+    return Results.Created($"AdicionarUsuario/{user.UserId}", user);
 });
 
 app.MapDelete("ExcluirUsuario/{id}", async (int userid, ContextDB contexto) =>
     {
-        var userexcluir = await contexto.Users.FirstOrDefaultAsync(p => p.UserID == userid);
+        var userexcluir = await contexto.Users.FirstOrDefaultAsync(p => p.UserId == userid);
         if (userexcluir != null)
         {
             contexto.Users.Remove(userexcluir);
@@ -95,7 +95,7 @@ app.MapGet("ListarUsuarios", async (ContextDB contexto) =>
 
 app.MapGet("ObterUsuario/{id}", async (int userid, ContextDB contexto) =>
 {
-    return await contexto.Users.FirstOrDefaultAsync(p => p.UserID == userid);
+    return await contexto.Users.FirstOrDefaultAsync(p => p.UserId == userid);
 });
 
 /* *******************************************
@@ -200,12 +200,12 @@ app.MapPost("AdicionarEquipe", async (Teams teams, ContextDB contexto) =>
 {
     contexto.Teams.Add(teams);
     await contexto.SaveChangesAsync();
-    return Results.Created($"AdicionarEquipe/{teams.TeamID}", teams);
+    return Results.Created($"AdicionarEquipe/{teams.TeamId}", teams);
 });
 
 app.MapDelete("ExcluirEquipe/{id}", async (int teamid, ContextDB contexto) =>
 {
-    var teamexcluir = await contexto.Teams.FirstOrDefaultAsync(p => p.TeamID == teamid);
+    var teamexcluir = await contexto.Teams.FirstOrDefaultAsync(p => p.TeamId == teamid);
     if (teamexcluir != null)
     {
         contexto.Teams.Remove(teamexcluir);
@@ -220,7 +220,7 @@ app.MapGet("ListarEquipes", async (ContextDB contexto) =>
 
 app.MapGet("ObterEquipesPorId/{id}", async (int teamsid, ContextDB contexto) =>
 {
-    return await contexto.Teams.FirstOrDefaultAsync(p => p.TeamID == teamsid);
+    return await contexto.Teams.FirstOrDefaultAsync(p => p.TeamId == teamsid);
 });
 
 /* *******************************************
@@ -253,12 +253,106 @@ app.MapGet("ObterMembrosPorId/{id}", async (int memberid, ContextDB contexto) =>
     return await contexto.Members.FirstOrDefaultAsync(p => p.Memberid == memberid);
 });
 
-app.MapGet("ObterMembrosPorTime/{id}", async (int teamsid, ContextDB contexto) =>
+app.MapGet("ObterMembrosPorUserId/{id}", async (int userid, ContextDB contexto) =>
+{
+    return await contexto.Members.FirstOrDefaultAsync(p => p.UserId == userid);
+});
+
+app.MapGet("ObterMembrosPorEquipe/{id}", async (int teamsid, ContextDB contexto) =>
 {
     return await contexto.Members.FirstOrDefaultAsync(p => p.Teamid == teamsid);
 });
 
 
+/* *******************************************
+ *   DEDICACAO DIARIA = DAIYLYDEDICATION
+ ********************************************/
+app.MapPost("AdicionarTempoDedicacao", async (DailyDedication dailyDedication, ContextDB contexto) =>
+{
+    contexto.DailyDedications.Add(dailyDedication);
+    await contexto.SaveChangesAsync();
+    return Results.Created($"AdicionarAtividade/{dailyDedication.Dailyid}", dailyDedication);
+});
+
+app.MapDelete("ExcluirTempoDedicacao/{id}", async (int dedicationid, ContextDB contexto) =>
+{
+    var dayliexcluir = await contexto.DailyDedications.FirstOrDefaultAsync(p => p.Dailyid == dedicationid);
+    if (dayliexcluir != null)
+    {
+        contexto.DailyDedications.Remove(dayliexcluir);
+        await contexto.SaveChangesAsync();
+    }
+});
+
+app.MapGet("ListarTempoDedicacao", async (ContextDB contexto) =>
+{
+    return await contexto.DailyDedications.ToListAsync();
+});
+
+app.MapGet("ObterTempoDedicacaoPorId/{id}", async (int dedicationid, ContextDB contexto) =>
+{
+    return await contexto.DailyDedications.FirstOrDefaultAsync(p => p.Dailyid == dedicationid);
+});
+
+/* *******************************************
+ *   STATUS ACTIVITIES
+ ********************************************/
+app.MapPost("AdicionarStatusAtividades", async (StatusActivities statusActivities, ContextDB contexto) =>
+{
+    contexto.StatusActivities.Add(statusActivities);
+    await contexto.SaveChangesAsync();
+    return Results.Created($"AdicionarAtividade/{statusActivities.Statusid}", statusActivities);
+});
+
+app.MapDelete("ExcluirStatusAtividades/{id}", async (int statusid, ContextDB contexto) =>
+{
+    var statusexcluir = await contexto.StatusActivities.FirstOrDefaultAsync(p => p.Statusid == statusid);
+    if (statusexcluir != null)
+    {
+        contexto.StatusActivities.Remove(statusexcluir);
+        await contexto.SaveChangesAsync();
+    }
+});
+
+app.MapGet("ListarStatusAtividades", async (ContextDB contexto) =>
+{
+    return await contexto.StatusActivities.ToListAsync();
+});
+
+app.MapGet("ObterStatusPorId/{id}", async (int statusid, ContextDB contexto) =>
+{
+    return await contexto.StatusActivities.FirstOrDefaultAsync(p => p.Statusid == statusid);
+});
+
+/* *******************************************
+ *           SISTEMAS - SYSTEMS
+ ********************************************/
+app.MapPost("AdicionarSistemas", async (Systems systems, ContextDB contexto) =>
+{
+    contexto.Systems.Add(systems);
+    await contexto.SaveChangesAsync();
+    return Results.Created($"AdicionarAtividade/{systems.Systemid}", systems);
+});
+
+app.MapDelete("ExcluirSistemas/{id}", async (int systemsid, ContextDB contexto) =>
+{
+    var systemexcluir = await contexto.Systems.FirstOrDefaultAsync(p => p.Systemid == systemsid);
+    if (systemexcluir != null)
+    {
+        contexto.Systems.Remove(systemexcluir);
+        await contexto.SaveChangesAsync();
+    }
+});
+
+app.MapGet("ListarSistemas", async (ContextDB contexto) =>
+{
+    return await contexto.Systems.ToListAsync();
+});
+
+app.MapGet("ObterSistemasPorId/{id}", async (int systemid, ContextDB contexto) =>
+{
+    return await contexto.Systems.FirstOrDefaultAsync(p => p.Systemid == systemid);
+});
 
 app.UseSwaggerUI();
 app.Run();

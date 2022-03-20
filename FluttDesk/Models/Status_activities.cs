@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace FluttDesk.Models
 {
     [Table("TB_Status")]
-    public class Status_activities
+    public class StatusActivities
     {
         [Key]
         public int Statusid { get; set; }

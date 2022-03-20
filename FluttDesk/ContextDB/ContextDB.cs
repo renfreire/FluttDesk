@@ -11,7 +11,7 @@ namespace FluttDesk.ContextDB
         public DbSet<Teams> Teams { get; set; }
         public DbSet<Members> Members { get; set; }
         public DbSet<DailyDedication> DailyDedications { get; set; }
-        public DbSet<Status_activities> Status_activities { get; set; }
+        public DbSet<StatusActivities> StatusActivities { get; set; }
 
         public DbSet<Systems> Systems { get; set; }
         public DbSet<ActivitiesProject> ActivitiesProject { get; set; }

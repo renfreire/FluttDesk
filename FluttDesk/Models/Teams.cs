@@ -7,9 +7,9 @@ namespace FluttDesk.Models
     public class Teams
     {
         [Key]     
-        public int TeamID { get; set; }        
+        public int TeamId { get; set; }        
         public String TeamName { get; set; }        
         public String TeamStatus { get; set; }
-        public List<Members> Members { get; set; }
+        //public ICollection<Members> Members { get; set; }
     }
 }
