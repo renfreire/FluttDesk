@@ -13,14 +13,14 @@ namespace FluttDesk.Models
         public int PrjRequester { get; set; }
         public String PrjDeptoRequester { get; set; }
         public int PrjSystem { get; set; }
-        public String Deptoti { get; set; }
-        public int PrjTechnicalResponsableid { get; set; }
-        public int PrjTeamid { get; set; }
+        public String PrjDeptoti { get; set; }
+        public int? PrjTechnicalResponsableid { get; set; }
+        public int? PrjTeamid { get; set; }
         public DateTime PrjDtCreation { get; set; }
-        public DateTime PrjDtClosed { get; set; }
-        public DateTime PrjLastChange { get; set; }
-        public int ProjEstimatedHours { get; set; }
-        public int PrjStatus { get; set; }
-        public String PrjPPR { get; set; }
+        public DateTime? PrjDtClosed { get; set; }
+        public DateTime? PrjLastChange { get; set; }
+        public int? PrjEstimatedHours { get; set; }
+        public int? PrjStatus { get; set; }
+        public bool? PrjPPR { get; set; }
     }
 }

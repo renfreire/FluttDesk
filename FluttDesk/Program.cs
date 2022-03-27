@@ -73,6 +73,7 @@ app.MapGet("/authenticated", (ClaimsPrincipal user) =>
  ********************************************/
 app.MapPost("AdicionarUsuario", async (Users user, ContextDB contexto) =>
 {
+    user.UserDtCreation = DateTime.Now;
     contexto.Users.Add(user);
     await contexto.SaveChangesAsync();
     return Results.Created($"AdicionarUsuario/{user.UserId}", user);
@@ -85,6 +86,10 @@ app.MapDelete("ExcluirUsuario/{id}", async (int userid, ContextDB contexto) =>
         {
             contexto.Users.Remove(userexcluir);
             await contexto.SaveChangesAsync();
+        }
+        else
+        {
+            Results.NotFound();
         }
     });
 
@@ -116,6 +121,10 @@ app.MapDelete("ExcluirRoles/{id}", async (int roleid, ContextDB contexto) =>
         contexto.Roles.Remove(roleexcluir);
         await contexto.SaveChangesAsync();
     }
+    else
+    {
+        Results.NotFound();
+    }
 });
 
 app.MapGet("ListarRoles", async (ContextDB contexto) =>
@@ -133,9 +142,51 @@ app.MapGet("ObterRoles/{id}", async (int roleid, ContextDB contexto) =>
  ********************************************/
 app.MapPost("AdicionarProjeto", async (Projects project, ContextDB contexto) =>
 {
+    project.PrjDtCreation = DateTime.Now;
+
+    if ( project.PrjStatus is null )
+    {
+        project.PrjStatus = 0;
+    }
+
+    if (project.PrjPPR is null)
+    {
+        project.PrjPPR = false;
+    }
     contexto.Projects.Add(project);
     await contexto.SaveChangesAsync();
     return Results.Created($"AdicionarProjeto/{project.Projectid}", project);
+});
+
+app.MapPut("AlterarProjeto/{id}", async (int projectid, Projects project, ContextDB contexto) =>
+{
+    if ( project != null)
+    {
+        var registro = await contexto.Projects.FindAsync(projectid);
+         if ( registro != null) {
+            registro.PrjRequester = project.PrjRequester != null ? project.PrjRequester : registro.PrjRequester ;
+            registro.PrjTeamid = project.PrjTeamid != null ? project.PrjTeamid : registro.PrjTeamid ;
+            registro.PrjTitle = project.PrjTitle != null ? project.PrjTitle : registro.PrjTitle;
+            registro.PrjStatus = project.PrjStatus != null ? project.PrjStatus : registro.PrjStatus;
+            registro.PrjDeptoRequester = project.PrjDeptoRequester != null ? project.PrjDeptoRequester : registro.PrjDeptoRequester;
+            registro.PrjPPR = project.PrjPPR != null ? project.PrjPPR : registro.PrjPPR;
+            registro.PrjDtClosed = project.PrjDtClosed != null ? project.PrjDtClosed : registro.PrjDtClosed;
+            registro.PrjDeptoti = project.PrjDeptoti != null ? project.PrjDeptoti : registro.PrjDeptoti;
+            registro.PrjEscope = project.PrjEscope != null ? project.PrjEscope : registro.PrjEscope;
+            registro.PrjEstimatedHours = project.PrjEstimatedHours != null ? project.PrjEstimatedHours : registro.PrjEstimatedHours;
+            registro.PrjLastChange = DateTime.Now;
+            registro.PrjSystem = project.PrjSystem != null ? project.PrjSystem : registro.PrjSystem;
+            registro.PrjTeamid = project.PrjTeamid != null ? project.PrjTeamid : registro.PrjTeamid;
+            registro.PrjTechnicalResponsableid = project.PrjTechnicalResponsableid != null ? project.PrjTechnicalResponsableid : registro.PrjTechnicalResponsableid;
+        } else   {
+            return Results.NotFound();
+        }
+    } else  {
+        return Results.NotFound();
+    }
+
+    await contexto.SaveChangesAsync();
+    return Results.NoContent();
 });
 
 app.MapDelete("ExcluirProjeto/{id}", async (int projectid, ContextDB contexto) =>
@@ -145,6 +196,10 @@ app.MapDelete("ExcluirProjeto/{id}", async (int projectid, ContextDB contexto) =
     {
         contexto.Projects.Remove(projectexcluir);
         await contexto.SaveChangesAsync();
+    }
+    else
+    {
+        Results.NotFound();
     }
 });
 
@@ -175,6 +230,10 @@ app.MapDelete("ExcluirAtividade/{id}", async (int activityid, ContextDB contexto
     {
         contexto.ActivitiesProject.Remove(actexcluir);
         await contexto.SaveChangesAsync();
+    }
+    else
+    {
+        Results.NotFound();
     }
 });
 

@@ -9,6 +9,6 @@ namespace FluttDesk.Models
         [Key]
         public int Systemid { get; set; }
         public String SystemName { get; set; }
-        public String Systemlogo { get; set; }
+        public Byte[]? Systemlogo { get; set; }
     }
 }

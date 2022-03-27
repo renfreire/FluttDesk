@@ -9,6 +9,6 @@ namespace FluttDesk.Models
         [Key]
         public int Dailyid { get; set; }
         public String DailyName { get; set; }
-        public String DailyHours { get; set; }
+        public int DailyHours { get; set; }
     }
 }

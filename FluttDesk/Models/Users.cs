@@ -15,7 +15,7 @@ namespace FluttDesk.Models
         public DateTime UserDtCreation { get; set; }
         public DateTime? UserDtLastLogin { get; set; }
         public string UserDepto { get; set; }
-        public string UserStatus { get; set; }
+        public bool UserStatus { get; set; }
         public string UserRole { get; set; }
     }
 }
